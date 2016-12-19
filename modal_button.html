@@ -1,0 +1,176 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript"> 
+
+//Ajax Script call to API_call.php to process API Request without leaving modal
+ $("document").ready(function(){ 
+ $(".data-form").submit(function(){   
+ $('#submit').hide();
+var data = { 
+ "action": "test" 
+  };
+  data = $(this).serialize() + "&" + $.param(data); 
+ $.ajax({ 
+  type: "POST", 
+  dataType: "json", 
+  url: "/API_call.php", //Relative or absolute path to response file API_call.php
+  data: data, 
+ success: function(data) { 
+var read = JSON.parse(data["json"]);
+if(read.Message == "Delivery Successfully Submitted") {
+ $('#submit').hide();
+ $(".the-price").html( 
+ 	read.Message
+  );
+}
+else { 
+$('#submit').show();
+
+$(".the-price").html( 
+ 	read.Message 
+  );
+}
+$(".the-return").html( 
+
+);
+  
+}
+}); 
+ return false; 
+  }); 
+}); 
+</script> 
+
+<!--- Some styling that will most likely need to be altered to fit your website's theme --->
+
+<style type="text/css">
+.product-list form label {	
+    float: left;
+    margin-right: 400px;
+    width: 200px;
+}
+.datepicker{	
+	z-index:1001;
+	cursor: pointer;
+}	
+.btn-modal {
+	border-width: 3px !important;
+	border-color: #A9A9A9;
+	border-radius: 8px;
+}
+</style>
+
+ <h2>ICA Night Delivery</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn-modal" style="background: url(http://icadeliveries.com/wp-content/uploads/2016/09/Logo-ICa-e1474068861422.png);
+  width:170px;height:70px;overflow:hidden;background-repeat: no-repeat;background-position: center;"  data-toggle="modal" data-backdrop="static" data-target="#myModal"></button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>   
+          <div style="text-align:center;">      
+          <input type="image" style="align:center;" src="http://icadeliveries.com/wp-content/uploads/2016/09/Logo-ICa-e1474068861422.png">
+	</div>
+        </div>
+        <div class="modal-body" style="margin-left:200px";>
+		<!-- Form that collects customer data for API Request -->
+		<form style="border: 0px;outline: 0;" method="POST" class="data-form">
+		<p style="text-align:center;margin-right:200px;">Please Input All Necessary Information For ICA Deliveries Job Submission</p>
+		<label>Name: </label><br>
+		<input style="align:left;" type="text" name="cust" id="cust" value="" required></input><br><br> <!--- Customer name input. Can be supplied from your Database --->
+		<label>Delivery Recipients Email: </label><br>
+		<input style="float:none;"  type="text" name="cust_email" id="cust_email" value="" required></input><br><br> <!--- Customer email input. Can be supplied from your Database --->
+		<label>Phone: </label><br>
+		<input style="float:none;"  type="text" name="cust_phone" id="cust_phone" value="" required></input><br><br>
+		<label>Destination Street Address: </label><br>
+		<input type="text" class="end" name="destination" id="end" value="" required></input><br><br>
+		<label>Destination Suburb: </label><br>
+		<select name="suburb" id="suburb"> <!--- This is the supplied suburb list that ICA delivers to --->
+			<option value="East Melbourne 3002">3002 - East Melbourne</option>
+			<option value="Maidstone 3012">3012 - Maidstone</option>
+			<option value="Brooklyn 3012">3012 - Brooklyn</option>
+			<option value="Yarraville 3013">3013 - Yarraville</option>
+			<option value="Baybrook 3019">3019 - Baybrook</option>
+			<option value="Sunshine 3020">3020 - Sunshine</option>
+			<option value="Maribyrnong 3032">3032 - Maribyrnong</option>
+			<option value="Keilor East 3033">3033 - Keilor East</option>
+			<option value="Kew 3101">3101 - Kew</option>
+			<option value="Kew East 3102">3102 - Kew East</option>
+			<option value="Balwyn 3103">3103 - Balwyn</option>
+			<option value="Balwyn North 3104">3104 - Balwyn North</option>
+			<option value="Richmond 3121">3121 - Richmond</option>
+			<option value="Clemorne 3121">3121 - Clemorne</option>
+			<option value="Burnley 3121">3121 - Burnley</option>
+			<option value="Hawthorn 3122">3122 - Hawthorn</option>
+			<option value="Hawthorn East 3123">3123 - Hawthorn East</option>
+			<option value="Camberwell 3124">3124 - Camberwell</option>
+			<option value="Burwood 3125">3125 - Burwood</option>
+			<option value="Surrey Hills 3127">3127 - Surrey Hills</option>
+			<option value="Box Hill 3128">3128 - Box Hill</option>
+			<option value="Box Hill South 3128">3128 - Box Hill South</option>
+			<option value="Box Hill North 3129">3129 - Box Hill North</option>
+			<option value="Mont Albert North 3129">3129 - Mont Albert North</option>
+			<option value="Toorak 3142">3142 - Toorak</option>
+			<option value="Armadale 3143">3143 - Armadale</option>
+			<option value="Kooyong 3144">3144 - Kooyong</option>
+			<option value="Malvern 3144">3144 - Malvern</option>
+			<option value="Malvern East 3145">3145 - Malvern East</option>
+			<option value="Glen Iris 3146">3146 - Glen Iris</option>
+			<option value="Ashburton 3147">3147 - Ashburton</option>
+			<option value="Chadstone 3148">3148 - Chadstone</option>
+			<option value="Glen Waverly 3150">3150 Glen Waverly</option>
+			<option value="Burwood East 3151">3151 - Burwood East</option>
+			<option value="Caulfield North 3161">3161 Caulfield North</option>
+			<option value="Oakleigh 3166">3166 - Oakleigh</option>
+			<option value="Huntingdale 3166">3166 - Huntingdale</option>
+			<option value="Clayton 3168">3168 - Clayton</option>
+			<option value="Notting Hill 3168">3168 - Notting Hill</option>
+			<option value="Prahran 3181">3181 - Prahran</option>
+			<option value="St Kilda 3182">3182 - St Kilda</option>
+			<option value="St Kilda East 3183">3183 - St Kilda East</option>
+			<option value="Elwood 3184">3184 - Elwood</option>
+			<option value="Elsternwick 3185">3185 - Elsternwick</option>
+			<option value="Brighton 3186">3186 - Brighton</option>
+			<option value="Brighton East 3187">3187 - Brighton East</option>
+			<option value="Hampton 3188">3188 - Hampton</option>
+			<option value="Moorabbin 3189">3189 - Moorabbin</option>
+			<option value="Mordialloc 3195">3195 - Mordialloc</option>
+			<option value="Braeside 3195">3195 - Braeside</option>
+			<option value="Port Melbourne 3207">3207 - Port Melbourne</option>
+		</select>
+		<br><br>
+		<label>Desired Delivery Date: </label><br>
+		               
+                <input class="datepicker" name="date" id="date" autocomplete="off" required/><br>
+               
+	<script type="text/javascript">
+            $(function () {
+                $('.datepicker').datepicker({
+                format: 'dd-mm-yyyy',
+                startDate: '-0d',
+                orientation: 'top'
+                });
+            });
+    </script>
+		<!-- Please Input Your Provided ID and Authentication Codes Into The Empty Values -->
+		<input type="hidden" class="start_postal" name="start_postal" id="start_postal" value=""></input> <!--- Postal code for your retail store --->
+		<input type="hidden" class="start" name="origin" id="start" value=""></input>  <!--- This needs to be the address of your retail store --->
+		<input type="hidden" name="id" id="id" value="" readonly></input>  <!-- Supplied ID HERE -->
+		<input type="hidden" name="auth" id="auth" value="" readonly></input>  <!-- Supplied Authentication Code HERE --> 
+		<br><div stye="margin-left:85px;"><button style="text-align:center;margin-left:55px;" type="submit" value="submit" id="submit" name="submit">Submit</button></div>
+		</div>
+		<div class="the-price" style="text-align:center;"> 
+		</div>
+        <div class="modal-footer">
+          </div>
+        </form>
+      </div>    
+    </div>
+  </div>
